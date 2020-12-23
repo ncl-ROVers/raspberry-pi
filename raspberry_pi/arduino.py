@@ -87,6 +87,8 @@ class Arduino:
         Pre-communicates at first, to identify the device and set relevant ID, while ignoring empty data. Starts
         exchanging information properly immediately after.
         """
+        data = None
+
         while True:
             try:
                 data = self._serial.read_until().strip()
@@ -94,9 +96,12 @@ class Arduino:
                     continue
 
                 try:
-                    self._device = Device(msgpack.unpackb(data.decode("utf-8"))["ID"])
-                except (UnicodeError, UnpackException):
+                    self._device = Device(msgpack.unpackb(data)["ID"])
+                except UnpackException:
                     logger.exception(f"Failed to decode the following data in pre-communication: {data}")
+                    return
+                except KeyError:
+                    logger.error(f"Invalid device ID received from {self._port}")
                     return
 
                 # Knowing the id, set the connection status to connected (True) and exit the pre-communication step
@@ -109,7 +114,7 @@ class Arduino:
                 return
 
             except (KeyError, ValueError):
-                logger.error(f"Invalid device ID received from {self._port}")
+                logger.exception(f"Invalid data received from {self._port} - {data}")
                 return
 
         while True:
@@ -118,8 +123,8 @@ class Arduino:
                     logger.debug(f"Received data from {self._port} - {data}")
 
                     try:
-                        data = msgpack.unpackb(data.decode("utf-8").strip())
-                    except (UnicodeError, UnpackException):
+                        data = msgpack.unpackb(data)
+                    except UnpackException:
                         logger.exception(f"Failed to decode following data: {data}")
 
                     # Remove ID from the data to avoid setting it upstream, disconnect in case of errors
@@ -135,7 +140,7 @@ class Arduino:
                     self._serial.reset_output_buffer()
 
                 # Send data and wait for a response from Arduino (next set of data to process)
-                self._serial.write(bytes(msgpack.packb(self._dm.get(self._device)) + "\n"))
+                self._serial.write(msgpack.packb(self._dm.get(self._device)) + b"\n")
                 data = self._serial.read_until().strip()
 
             except SerialException:
