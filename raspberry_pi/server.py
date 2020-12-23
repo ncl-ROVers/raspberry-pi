@@ -130,7 +130,7 @@ class _SurfaceConnection:
 
             # Once the client is connected, start the data exchange process
             logger.info(f"Client with address {self._client_address} connected")
-            self._communication_thread.start()  # TODO: Need this as a thread? Test plz
+            self._communication_thread.start()
 
         except OSError:
             logger.exception("Failed to listen to incoming connections")
@@ -152,8 +152,8 @@ class _SurfaceConnection:
                     break
 
                 try:
-                    data = msgpack.unpackb(data.decode("utf-8").strip())
-                except (UnicodeError, UnpackException):
+                    data = msgpack.unpackb(data)
+                except UnpackException:
                     logger.warning(f"Failed to decode the following data: {data}")
 
                 # Only handle valid, non-empty data
