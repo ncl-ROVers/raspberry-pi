@@ -54,12 +54,12 @@ GRIPPER_IDLE = 1500
 CORD_IDLE = 1500
 DEFAULTS = {
     Device.SURFACE: {
-        "A_O": False,
-        "A_I": False,
-        "S_O": 0,
-        "S_I": 0
+        "A_A": False,
+        "A_B": False,
+        "S_A": 0,
+        "S_B": 0
     },
-    Device.ARDUINO_O: {
+    Device.ARDUINO_A: {
         "T_HFP": THRUSTER_IDLE,
         "T_HFS": THRUSTER_IDLE,
         "T_HAP": THRUSTER_IDLE,
@@ -68,9 +68,10 @@ DEFAULTS = {
         "T_VFS": THRUSTER_IDLE,
         "T_VAP": THRUSTER_IDLE,
         "T_VAS": THRUSTER_IDLE,
+    },
+    Device.ARDUINO_B: {
         "T_M": THRUSTER_IDLE,
         "M_G": GRIPPER_IDLE,
         "M_C": CORD_IDLE
-    },
-    Device.ARDUINO_I: {}
+    }
 }
