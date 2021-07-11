@@ -60,16 +60,16 @@ DEFAULTS = {
         "S_B": 0
     },
     Device.ARDUINO_A: {
-        "T_HFP": THRUSTER_IDLE,
-        "T_HFS": THRUSTER_IDLE,
-        "T_HAP": THRUSTER_IDLE,
-        "T_HAS": THRUSTER_IDLE,
         "T_VFP": THRUSTER_IDLE,
         "T_VFS": THRUSTER_IDLE,
         "T_VAP": THRUSTER_IDLE,
         "T_VAS": THRUSTER_IDLE,
     },
     Device.ARDUINO_B: {
+        "T_HFP": THRUSTER_IDLE,
+        "T_HFS": THRUSTER_IDLE,
+        "T_HAP": THRUSTER_IDLE,
+        "T_HAS": THRUSTER_IDLE,
         "T_M": THRUSTER_IDLE,
         "M_G": GRIPPER_IDLE,
         "M_C": CORD_IDLE
