@@ -8,15 +8,15 @@ from .enums import Device
 # Declare paths to relevant folders - tests folder shouldn't be known here
 ROOT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 RASPBERRY_PI_DIR = os.path.join(ROOT_DIR, "raspberry_pi")
-RES_DIR = os.path.join(RASPBERRY_PI_DIR, "res")
-LOG_DIR = os.path.join(RASPBERRY_PI_DIR, "log")
+ASSETS_DIR = os.path.join(RASPBERRY_PI_DIR, "assets")
+LOG_DIR = os.path.join(ASSETS_DIR, "log")
 
 # Load the environment variables from the root folder and/or the resources folder
+dotenv.load_dotenv(dotenv_path=os.path.join(ASSETS_DIR, ".env"))
 dotenv.load_dotenv(dotenv_path=os.path.join(ROOT_DIR, ".env"))
-dotenv.load_dotenv(dotenv_path=os.path.join(RES_DIR, ".env"))
 
 # Declare logging config
-LOG_CONFIG_PATH = os.getenv("LOG_CONFIG_PATH", os.path.join(RES_DIR, "log-config.json"))
+LOG_CONFIG_PATH = os.getenv("LOG_CONFIG_PATH", os.path.join(ASSETS_DIR, "log-config.json"))
 LOGGER_NAME = os.getenv("LOGGER_NAME", "raspberry-pi")
 
 # Declare surface connection information
@@ -54,23 +54,24 @@ GRIPPER_IDLE = 1500
 CORD_IDLE = 1500
 DEFAULTS = {
     Device.SURFACE: {
-        "A_O": False,
-        "A_I": False,
-        "S_O": 0,
-        "S_I": 0
+        "A_A": False,
+        "A_B": False,
+        "S_A": 0,
+        "S_B": 0
     },
-    Device.ARDUINO_O: {
-        "T_HFP": THRUSTER_IDLE,
-        "T_HFS": THRUSTER_IDLE,
-        "T_HAP": THRUSTER_IDLE,
-        "T_HAS": THRUSTER_IDLE,
+    Device.ARDUINO_A: {
         "T_VFP": THRUSTER_IDLE,
         "T_VFS": THRUSTER_IDLE,
         "T_VAP": THRUSTER_IDLE,
         "T_VAS": THRUSTER_IDLE,
+    },
+    Device.ARDUINO_B: {
+        "T_HFP": THRUSTER_IDLE,
+        "T_HFS": THRUSTER_IDLE,
+        "T_HAP": THRUSTER_IDLE,
+        "T_HAS": THRUSTER_IDLE,
         "T_M": THRUSTER_IDLE,
         "M_G": GRIPPER_IDLE,
         "M_C": CORD_IDLE
-    },
-    Device.ARDUINO_I: {}
+    }
 }

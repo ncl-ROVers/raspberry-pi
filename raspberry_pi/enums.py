@@ -14,5 +14,5 @@ class Device(Enum):
 
     UNASSIGNED = "UNASSIGNED"
     SURFACE = "S"
-    ARDUINO_O = "A_O"
-    ARDUINO_I = "A_I"
+    ARDUINO_A = "A_A"
+    ARDUINO_B = "A_B"

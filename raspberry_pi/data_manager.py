@@ -32,8 +32,8 @@ class DataManager:
         """
         self._data = {
             Device.SURFACE: DEFAULTS[Device.SURFACE].copy(),
-            Device.ARDUINO_O: DEFAULTS[Device.ARDUINO_O].copy(),
-            Device.ARDUINO_I: DEFAULTS[Device.ARDUINO_I].copy()
+            Device.ARDUINO_A: DEFAULTS[Device.ARDUINO_A].copy(),
+            Device.ARDUINO_B: DEFAULTS[Device.ARDUINO_B].copy()
         }
 
     def get(self, device: Device, *args) -> dict:
@@ -72,14 +72,14 @@ class DataManager:
 
             # Override each Arduino dictionary with the defaults if the `set_default` flag is set
             if set_default:
-                self._data[Device.ARDUINO_O] = DEFAULTS[Device.ARDUINO_O]
-                self._data[Device.ARDUINO_I] = DEFAULTS[Device.ARDUINO_I]
+                self._data[Device.ARDUINO_A] = DEFAULTS[Device.ARDUINO_A]
+                self._data[Device.ARDUINO_B] = DEFAULTS[Device.ARDUINO_B]
             else:
                 for key, value in kwargs.items():
-                    if key in self._data[Device.ARDUINO_O]:
-                        self._handle_data_from_surface(Device.ARDUINO_O, key, value)
-                    elif key in self._data[Device.ARDUINO_I]:
-                        self._handle_data_from_surface(Device.ARDUINO_I, key, value)
+                    if key in self._data[Device.ARDUINO_A]:
+                        self._handle_data_from_surface(Device.ARDUINO_A, key, value)
+                    elif key in self._data[Device.ARDUINO_B]:
+                        self._handle_data_from_surface(Device.ARDUINO_B, key, value)
                     else:
                         raise KeyError(f"Couldn't find key {key} in any of the Arduino dictionaries")
 
